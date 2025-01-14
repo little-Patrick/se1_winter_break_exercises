@@ -6,8 +6,6 @@ Make sure you review this entire README before getting started!
 
 You are required to build an `Enigma` class with the methods described below; you may find it useful to create additional classes and/or modules. All classes, modules and methods should have a single responsibility, and should be well organized and readable.
 
-### Enigma Class
-
 Create an `Enigma` class with the following methods:
 
 #### `Enigma#encrypt(message, key, date)`
