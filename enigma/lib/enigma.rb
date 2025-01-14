@@ -21,6 +21,11 @@ class Enigma
   end
 
   def shift_key(message, key)
-    message. 
+    binding.pry
+    key_split = keys.split("")
+    a = key_split[0].concat(key_split[1])
+    b = key_split[2].concat(key_split[3])
+    c = key_split[3].concat(key_split[4])
+    d = key_split[4].concat(key_split[5])
   end
 end
