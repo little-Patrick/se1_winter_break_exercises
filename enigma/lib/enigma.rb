@@ -45,7 +45,6 @@ class Enigma
   
   def offset
     key.each_with_index {|key| hash[key] = key}
-    letter_hash = {"a" => "a", "b" => "b", "c" => "c", "d" =>
     letter_key = ("a".."z").to_a << " "
     key_shift = shift_key
     date_shift = shift_date
