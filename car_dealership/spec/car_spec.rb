@@ -1,4 +1,5 @@
 require 'rspec'
+require 'pry'
 require './lib/car'
 
 RSpec.describe Car do
