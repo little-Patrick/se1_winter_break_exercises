@@ -23,9 +23,9 @@ class Enigma
   def shift_key
     key_split = @key.split("")
     keys = {
-      A: key_split[0].concat(key_split[1])
-      B: key_split[1].concat(key_split[2])
-      C: key_split[2].concat(key_split[3])
+      A: key_split[0].concat(key_split[1]),
+      B: key_split[1].concat(key_split[2]),
+      C: key_split[2].concat(key_split[3]),
       D: key_split[3].concat(key_split[4])
     }
     return keys
@@ -35,18 +35,24 @@ class Enigma
     square = @date.to_i ** 2
     date_split = square.to_s.split("")
     date_offset = {
-      A: date_split[-4]
-      B: date_split[-3]
-      C: date_split[-2]
+      A: date_split[-4],
+      B: date_split[-3],
+      C: date_split[-2],
       D: date_split[-1]
     }
     return date_offset
   end
   
+  def final_key
+    final = Hash.new(0)
+    shift_key.keys.each {|x| final[x] = (shift_key[x].to_i + shift_date[x].to_i)}
+    final
+  end
+
   def offset
-    key.each_with_index {|key| hash[key] = key}
+    binding.pry
+    
+    key.each_with_index 
     letter_key = ("a".."z").to_a << " "
-    key_shift = shift_key
-    date_shift = shift_date
   end 
 end
