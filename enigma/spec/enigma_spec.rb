@@ -9,7 +9,6 @@ RSpec.describe Enigma do
   describe "initializes" do
     it "exists" do
     	expect(@code).to be_an_instance_of(Enigma)
-      binding.pry 
     end
     
     it "has an encryption" do

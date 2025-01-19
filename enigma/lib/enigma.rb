@@ -50,9 +50,14 @@ class Enigma
   end
 
   def offset
-    binding.pry
-    
-    key.each_with_index 
     letter_key = ("a".."z").to_a << " "
+    hash_letter_key = {}
+    letter_key.each_with_index{|key, value| hash_letter_key[key] = key}
+    encrypted = {}
+    @message.split("").each_slice(4) do |slice|
+      hash_letter_key.keys.rotate(final_key[:A])
+      encrypted[slice[0]] = hash_letter_key[slice[0]]
+      binding.pry
+    end 
   end 
 end
