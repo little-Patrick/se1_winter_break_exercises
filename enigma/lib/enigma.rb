@@ -10,12 +10,14 @@ class Enigma
   end
 
   def encrypt
-    offset
+    message_shift
   end
 
   def decrypt
+    reverse_shift
   end
-
+  
+  private
   def random_key
     rand(1000..99999)
   end
@@ -49,15 +51,79 @@ class Enigma
     final
   end
 
-  def offset
-    letter_key = ("a".."z").to_a << " "
-    hash_letter_key = {}
-    letter_key.each_with_index{|key, value| hash_letter_key[key] = key}
-    encrypted = {}
-    @message.split("").each_slice(4) do |slice|
-      hash_letter_key.keys.rotate(final_key[:A])
-      encrypted[slice[0]] = hash_letter_key[slice[0]]
-      binding.pry
+  def offset(positive = true)
+    hash_letter_key = {} 
+    letter_key = letters 
+    letter_key.each_with_index {|key, value| hash_letter_key[key] = key}
+  
+    a_keys = hash_letter_key.clone
+    b_keys = hash_letter_key.clone
+    c_keys = hash_letter_key.clone
+    d_keys = hash_letter_key.clone
+    
+    if positive
+      a_offset = letter_key.rotate(final_key[:A])
+      b_offset = letter_key.rotate(final_key[:B])
+      c_offset = letter_key.rotate(final_key[:C])
+      d_offset = letter_key.rotate(final_key[:D])
+    else
+      a_offset = letter_key.rotate(-final_key[:A])
+      b_offset = letter_key.rotate(-final_key[:B])
+      c_offset = letter_key.rotate(-final_key[:C])
+      d_offset = letter_key.rotate(-final_key[:D])
     end 
+    a_keys.keys.each_with_index {|key, index| a_keys[key] = a_offset[index]}
+    b_keys.keys.each_with_index {|key, index| b_keys[key] = b_offset[index]}
+    c_keys.keys.each_with_index {|key, index| c_keys[key] = c_offset[index]}
+    d_keys.keys.each_with_index {|key, index| d_keys[key] = d_offset[index]}
+    
+    offset = {
+      A: a_keys,
+      B: b_keys,
+      C: c_keys,
+      D: d_keys
+      }
+      return offset
   end 
+  
+  def message_shift
+    encryption = []
+    @message.split('').each_slice(4) do |slice|
+      encryption << offset[:A][slice[0]]
+      encryption << offset[:B][slice[1]]
+      encryption << offset[:C][slice[2]]
+      encryption << offset[:D][slice[3]]
+    end
+    encryption.join("")
+  end
+  
+  def reverse_shift
+    decryption = []
+    @message.split('').each_slice(4) do |slice|
+      decryption << offset(false)[:A][slice[0]] if slice[0]
+      decryption << offset(false)[:B][slice[1]] if slice[1]
+      decryption << offset(false)[:C][slice[2]] if slice[2]
+      decryption << offset(false)[:D][slice[3]] if slice[3]
+    end
+    decryption.join("")
+  end
+
+  def letters
+    downcase = ("a".."z").to_a
+    upcase = ("A".."Z").to_a
+    numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    special = ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "{", "]", "{", "|", "|", ";", ",", "<", ".", ">", "/", "?"] 
+    letters = [downcase, upcase, numbers, special].flatten
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
