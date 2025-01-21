@@ -3,7 +3,7 @@ require "./spec/spec_helper.rb"
 
 RSpec.describe Enigma do
   before(:each) do
-    @code = Enigma.new("hello world", "02715", "040895")
+    @code = Enigma.new("", "02715", "040895")
   end
 
   describe "initializes" do
