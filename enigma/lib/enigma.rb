@@ -89,7 +89,7 @@ class Enigma
   def message_shift
     encryption = []
     @message.split('').each_slice(4) do |slice|
-      encryption << offset[:A][slice[0]]
+      encryption << offset[:A][slice[0]] 
       encryption << offset[:B][slice[1]]
       encryption << offset[:C][slice[2]]
       encryption << offset[:D][slice[3]]
